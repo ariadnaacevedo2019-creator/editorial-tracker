@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TESIS DISEÑO EDITORIAL</title>
+    <!-- Tipografía: Inter para máxima legibilidad -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --text-main: #2D3436;
+            --text-muted: #636E72;
+            --accent: #6C5CE7; /* Elegante Indigo */
+            --success: #00B894; /* Verde esmeralda suave */
+            --border: #DFE6E9;
+            --radius: 16px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px 15px 100px 15px;
+            line-height: 1.5;
+        }
+
+        /* --- Header & Progress --- */
+        header {
+            max-width: 500px;
+            margin: 0 auto 25px auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+
+        .stats-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar-bg {
+            background: var(--border);
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #main-progress {
+            background: var(--accent);
+            height: 100%;
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- Accordion List --- */
+        .chapters-list {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chapter-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .chapter-card.completed {
+            border-color: var(--success);
+            background-color: #F0FFF4;
+        }
+
+        .chapter-header {
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .chapter-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .chapter-icon {
+            font-size: 1.4rem;
+        }
+
+        .chapter-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .chapter-status-pill {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 20px;
+            background: var(--bg-color);
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .completed .chapter-status-pill {
+            background: var(--success);
+            color: white;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .expanded .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* --- Chapter Content --- */
+        .chapter-content {
+            display: none;
+            padding: 0 18px 18px 18px;
+            border-top: 1px solid #F1F2F6;
+        }
+
+        .chapter-card.expanded .chapter-content {
+            display: block;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #F9F9F9;
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: var(--accent);
+        }
+
+        .task-label {
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .notes-area {
+            margin-top: 15px;
+        }
+
+        .notes-area label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            resize: none;
+            min-height: 80px;
+            background: #FAFAFA;
+        }
+
+        textarea:focus {
+            outline: 2px solid var(--accent);
+            background: white;
+        }
+
+        /* --- Utilities --- */
+        .reset-btn {
+            display: block;
+            margin: 40px auto 0 auto;
+            background: transparent;
+            border: 1px solid #FAB1A0;
+            color: #E17055;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Animación suave para el check */
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .completed-check {
+            color: var(--success);
+            font-weight: bold;
+            display: none;
+        }
+
+        .completed .completed-check {
+            display: inline;
+            animation: pop 0.4s ease;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Tesis Diseño Editorial</h1>
+        <div class="stats-container">
+            <div class="progress-info">
+                <span>Avance General</span>
+                <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div id="main-progress"></div>
+            </div>
+            <div style="margin-top:12px; font-size: 0.8rem; color: var(--text-muted);">
+                <span id="completed-count">0</span> de <span id="total-count">0</span> capítulos listos
+            </div>
+        </div>
+    </header>
+
+    <main class="chapters-list" id="chapters-container">
+        <!-- Los capítulos se generarán aquí con JavaScript -->
+    </main>
+
+    <button class="reset-btn" onclick="confirmReset()">Resetear todo el progreso</button>
+
+    <script>
+        // --- DATA DE LA TESIS ---
+        // Basada en el índice proporcionado, agrupando subtítulos en bloques lógicos para claridad editorial
+        const thesisIndex = [
+            { id: "c02", title: "02. Introducción", icon: "📄" },
+            { id: "c03", title: "03. Elección y Delimitación", icon: "🎯" },
+            { id: "c04", title: "04. Planteamiento del Problema", icon: "❓" },
+            { id: "c05", title: "05. Justificación", icon: "⚖️" },
+            { id: "c06", title: "06. Objetivos y Diagnóstico", icon: "🚩" },
+            { id: "c07", title: "07. Hipótesis", icon: "💡" },
+            { id: "c08", title: "08. Metodología y Usuarios", icon: "🧪" },
+            { id: "c09", title: "09. Marco de Referencia", icon: "🧠" },
+            { id: "c10", title: "10. Normatividad", icon: "📜" },
+            { id: "c11", title: "11. Principios UX/UI", icon: "📱" },
+            { id: "c12", title: "12. Casos Análogos", icon: "🏢" },
+            { id: "c13", title: "13. Conclusiones Investigación", icon: "🏁" },
+            { id: "c14", title: "14. Introducción al Proyecto", icon: "📐" },
+            { id: "c15", title: "15. Características del Predio", icon: "🗺️" },
+            { id: "c16", title: "16. Criterios de Diseño", icon: "🎨" },
+            { id: "c17", title: "17. Justificación Espacial", icon: "🧩" },
+            { id: "c18", title: "18. Desarrollo Conceptual", icon: "✨" },
+            { id: "c19", title: "19. Descripción por Zonas", icon: "🏠" },
+            { id: "c20", title: "20. Conclusiones Proyecto", icon: "✅" }
+        ];
+
+        const workflowTasks = [
+            "Paso 1: Síntesis de 'Copy' Editorial",
+            "Paso 2: Guion de Visualización",
+            "Paso 3: Generación de Prompts / Assets",
+            "Paso 4: Curaduría de Planos a 'Diagramas'",
+            "Paso 5: Maquetación en Canva"
+        ];
+
+        // --- STATE MANAGEMENT ---
+        let state = {
+            completedTasks: {}, // { chapterId: [taskIndex, ...] }
+            notes: {},         // { chapterId: "text" }
+            expanded: {}       // { chapterId: true/false }
+        };
+
+        // --- INITIALIZATION ---
+        function init() {
+            const savedState = localStorage.getItem('thesis_editorial_tracker');
+            if (savedState) {
+                state = JSON.parse(savedState);
+            }
+            render();
+        }
+
+        function save() {
+            localStorage.setItem('thesis_editorial_tracker', JSON.stringify(state));
+            updateGlobalProgress();
+        }
+
+        function render() {
+            const container = document.getElementById('chapters-container');
+            container.innerHTML = '';
+
+            thesisIndex.forEach(chapter => {
+                const isExpanded = state.expanded[chapter.id] || false;
+                const chapterCompletedTasks = state.completedTasks[chapter.id] || [];
+                const isChapterDone = chapterCompletedTasks.length === workflowTasks.length;
+
+                const card = document.createElement('div');
+                card.className = `chapter-card ${isExpanded ? 'expanded' : ''} ${isChapterDone ? 'completed' : ''}`;
+                card.id = `card-${chapter.id}`;
+
+                card.innerHTML = `
+                    <div class="chapter-header" onclick="toggleChapter('${chapter.id}')">
+                        <div class="chapter-header-left">
+                            <span class="chapter-icon">${chapter.icon}</span>
+                            <span class="chapter-title">${chapter.title}</span>
+                            <span class="completed-check">✓</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span class="chapter-status-pill">${chapterCompletedTasks.length}/${workflowTasks.length}</span>
+                            <span class="arrow">▼</span>
+                        </div>
+                    </div>
+                    <div class="chapter-content">
+                        <ul class="task-list">
+                            ${workflowTasks.map((task, index) => `
+                                <li class="task-item">
+                                    <input type="checkbox" 
+                                        id="task-${chapter.id}-${index}" 
+                                        ${chapterCompletedTasks.includes(index) ? 'checked' : ''}
+                                        onchange="toggleTask('${chapter.id}', ${index})">
+                                    <label class="task-label" for="task-${chapter.id}-${index}">${task}</label>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        <div class="notes-area">
+                            <label>Notas de Diseño</label>
+                            <textarea placeholder="Escribe aquí ideas, paletas o recordatorios..." 
+                                oninput="saveNote('${chapter.id}', this.value)">${state.notes[chapter.id] || ''}</textarea>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            updateGlobalProgress();
+        }
+
+        // --- ACTIONS ---
+        window.toggleChapter = function(id) {
+            state.expanded[id] = !state.expanded[id];
+            const card = document.getElementById(`card-${id}`);
+            card.classList.toggle('expanded');
+            save();
+        };
+
+        window.toggleTask = function(chapterId, taskIndex) {
+            if (!state.completedTasks[chapterId]) {
+                state.completedTasks[chapterId] = [];
+            }
+
+            const index = state.completedTasks[chapterId].indexOf(taskIndex);
+            if (index > -1) {
+                state.completedTasks[chapterId].splice(index, 1);
+            } else {
+                state.completedTasks[chapterId].push(taskIndex);
+            }
+
+            // Actualizar vista de la tarjeta inmediatamente
+            const isChapterDone = state.completedTasks[chapterId].length === workflowTasks.length;
+            const card = document.getElementById(`card-${chapterId}`);
+            if (isChapterDone) card.classList.add('completed');
+            else card.classList.remove('completed');
+            
+            // Actualizar el pill de contador
+            card.querySelector('.chapter-status-pill').innerText = `${state.completedTasks[chapterId].length}/${workflowTasks.length}`;
+
+            save();
+        };
+
+        window.saveNote = function(chapterId, text) {
+            state.notes[chapterId] = text;
+            save();
+        };
+
+        function updateGlobalProgress() {
+            let totalTasks = thesisIndex.length * workflowTasks.length;
+            let completedTasksCount = 0;
+            let completedChaptersCount = 0;
+
+            thesisIndex.forEach(chapter => {
+                const done = state.completedTasks[chapter.id] || [];
+                completedTasksCount += done.length;
+                if (done.length === workflowTasks.length) {
+                    completedChaptersCount++;
+                }
+            });
+
+            const percent = totalTasks > 0 ? Math.round((completedTasksCount / totalTasks) * 100) : 0;
+            
+            document.getElementById('main-progress').style.width = `${percent}%`;
+            document.getElementById('progress-percent').innerText = `${percent}%`;
+            document.getElementById('completed-count').innerText = completedChaptersCount;
+            document.getElementById('total-count').innerText = thesisIndex.length;
+        }
+
+        window.confirmReset = function() {
+            if (confirm("¿Estás seguro de que quieres borrar todo el avance? Esta acción no se puede deshacer.")) {
+                state = { completedTasks: {}, notes: {}, expanded: {} };
+                save();
+                render();
+            }
+        };
+
+        // Ejecutar al cargar
+        window.onload = init;
+    </script>
+</body>
+</html>
