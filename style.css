@@ -1,0 +1,246 @@
+:root {
+  --bg: #f4f5f7;
+  --card: #ffffff;
+  --text: #22252b;
+  --muted: #6b7280;
+  --line: #e6e8ec;
+  --accent: #5b4fcf;
+  --accent-soft: #efeefe;
+  --ok: #138a58;
+  --ok-soft: #e9f8f1;
+  --danger: #b93838;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --shadow: 0 8px 22px rgba(32, 41, 59, 0.07);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.4;
+  padding: 16px 14px 90px;
+}
+
+.app-header,
+.chapters-list,
+.app-footer {
+  width: min(760px, 100%);
+  margin-inline: auto;
+}
+
+h1 {
+  margin: 8px 0 14px;
+  font-size: clamp(1.05rem, 4.2vw, 1.35rem);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.progress-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.92rem;
+}
+
+.progress-row-footer { margin-top: 10px; }
+
+.progress-track {
+  margin-top: 10px;
+  width: 100%;
+  height: 11px;
+  border-radius: 999px;
+  background: #e2e5ea;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), #786ef0);
+  transition: width 220ms ease;
+}
+
+.chapters-list {
+  display: grid;
+  gap: 10px;
+}
+
+.chapter-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  overflow: clip;
+}
+
+.chapter-card.is-completed {
+  border-color: #b8e9d4;
+  background: #fcfffd;
+}
+
+.chapter-header {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.chapter-header-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.chapter-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  font-size: 1.1rem;
+}
+
+.chapter-title {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.chapter-meta {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 0.81rem;
+}
+
+.chapter-state {
+  font-weight: 600;
+}
+
+.chapter-card.is-completed .chapter-state {
+  color: var(--ok);
+}
+
+.chapter-arrow {
+  color: var(--muted);
+  font-size: 1.3rem;
+  transition: transform 220ms ease;
+}
+
+.chapter-card.is-open .chapter-arrow { transform: rotate(180deg); }
+
+.chapter-content {
+  border-top: 1px solid var(--line);
+  padding: 6px 14px 14px;
+}
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.task-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f2f4;
+}
+
+.task-line {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.task-main {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.task-checkbox {
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  accent-color: var(--accent);
+}
+
+.task-label {
+  font-size: 0.9rem;
+}
+
+.info-btn {
+  border: 1px solid #d8dbef;
+  background: #f8f8ff;
+  color: #4039a6;
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  min-height: 30px;
+}
+
+.notes-area { margin-top: 12px; }
+
+.notes-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.notes-input {
+  width: 100%;
+  border: 1px solid #d8dde3;
+  border-radius: var(--radius-md);
+  background: #fbfcfd;
+  padding: 10px;
+  font: inherit;
+  color: var(--text);
+}
+
+.notes-input:focus {
+  outline: 2px solid #c9c6ff;
+  border-color: #c0bdf7;
+  background: #fff;
+}
+
+.app-footer { margin-top: 16px; }
+
+.reset-btn {
+  width: 100%;
+  border: 1px solid #f4c1c1;
+  color: var(--danger);
+  background: #fff4f4;
+  border-radius: 999px;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  body { padding-top: 20px; }
+  .chapters-list { gap: 12px; }
+  .chapter-title { font-size: 1rem; }
+}
